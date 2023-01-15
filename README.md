@@ -1,2 +1,2 @@
-# Simonpt2
-New simon game version
+# TypeScript-with-react
+Using TypeScript with React

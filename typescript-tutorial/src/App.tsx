@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import MainGame from "./Components/MainButtons/MainGame";
+import MainGame from "./Components/MainGame/MainGame";
 
 function App() {
   return (

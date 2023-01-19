@@ -6,6 +6,7 @@ enum ColorOptions {
 }
 
 async function setColorPattern(btnId: string): Promise<string> {
+  console.log(btnId);
   let btnIdAsNum = parseInt(btnId);
   let selectedColor: string = ColorOptions[btnIdAsNum];
 

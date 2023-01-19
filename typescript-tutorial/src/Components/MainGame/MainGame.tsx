@@ -9,41 +9,45 @@ import ComputersTurn from "../functions/ComputersTurn";
 // button depending on the id
 // we need user to then click the button
 
-let defaultList: string[];
+let defaultList: string[] = [];
 
 function MainGame() {
   let [gameStatus, setGameStatus] = useState("play");
-  let [computerChoice, setComputerChoice] = useState([""]);
-  let [userChoice, setUserChoice] = useState([]);
+  let [computerChoice, setComputerChoice] = useState(defaultList);
+  let [userChoice, setUserChoice] = useState(defaultList);
   let [runNum, setRunNum] = useState(1);
   let [compPick, setCompPick] = useState("");
+  let [blueBtnColor, setBlueBtnColor] = useState("blue");
   let newBtnChoice: string;
   // let compTurn: string;
+  let newRun: number;
 
   useEffect(() => {
-    //gameStatus === "play"
+    runGame();
     console.log(computerChoice);
-  }, [runNum]);
-  while (runNum <= 3) {
-    // computer's turn
-    setCompPick(ComputersTurn(computerChoice));
-    console.log(`COMP RESULT: ${compPick}`);
-    setComputerChoice((prevArray) => [...prevArray, compPick]);
+  }, []);
 
-    //user's turn
+  let runGame = (): string => {
+    // computers turn
 
-    //compare
-    setRunNum((runNum += 1));
-    // if (userChoice === computerChoice) {
-    //   continue;
-    // } else {
-    //   setGameStatus("stop");
-    // }
-  }
+    let newClick: string = ComputersTurn(computerChoice);
+    setComputerChoice((prevArray) => [...prevArray, newClick]);
+    computerChoice.forEach((btn) => {
+      setColorPattern(btn);
+    });
+    // newRun = runNum += 1;
+    // setRunNum(newRun);
+    return "";
+  };
+  console.log("outside:", computerChoice);
 
   return (
     <div>
-      <div className={style.blueButton} id="0">
+      <div
+        className={style.blueButton}
+        style={{ backgroundColor: blueBtnColor }}
+        id="0"
+      >
         Blue
       </div>
       <div className={style.redButton} id="1">

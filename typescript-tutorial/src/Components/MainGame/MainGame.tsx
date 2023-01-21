@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../Styles/MainGame.module.css";
 import setColorPattern from "../functions/setColorPattern";
-import ComputersTurn from "../functions/ComputersTurn";
+import GenerateNewNumber from "../functions/ComputersTurn";
 
 // this will let us know which button will light up
 // we need to store that number in a list
@@ -12,34 +12,37 @@ import ComputersTurn from "../functions/ComputersTurn";
 let defaultList: string[] = [];
 
 function MainGame() {
-  let [gameStatus, setGameStatus] = useState("play");
   let [computerChoice, setComputerChoice] = useState(defaultList);
-  let [userChoice, setUserChoice] = useState(defaultList);
-  let [runNum, setRunNum] = useState(1);
   let [compPick, setCompPick] = useState("");
+  let [listOfColor, setListOfColor] = useState(defaultList);
   let [blueBtnColor, setBlueBtnColor] = useState("blue");
-  let newBtnChoice: string;
-  // let compTurn: string;
-  let newRun: number;
+
+  let { current: myArray } = useRef([]);
 
   useEffect(() => {
-    runGame();
-    console.log(computerChoice);
-  }, []);
+    computersTurn();
+    setBlueBtnColor(listOfColor[0]);
+    console.log(`color: ${listOfColor}`);
+  }, [blueBtnColor]);
 
-  let runGame = (): string => {
+  function computersTurn(): void {
     // computers turn
-
-    let newClick: string = ComputersTurn(computerChoice);
+    let newArr: string[] = [];
+    let newClick: string = GenerateNewNumber(computerChoice);
     setComputerChoice((prevArray) => [...prevArray, newClick]);
-    computerChoice.forEach((btn) => {
-      setColorPattern(btn);
-    });
-    // newRun = runNum += 1;
-    // setRunNum(newRun);
-    return "";
-  };
-  console.log("outside:", computerChoice);
+    newArr = setColorPattern(computerChoice);
+    console.log("newArr:", newArr);
+
+    // computerChoice.forEach((color) => {
+    //   newArr.push(setColorPattern(color));
+    // });
+    // console.log(newArr);
+    // console.log("testarr", arrTest);
+    setListOfColor(newArr);
+    //setBlueBtnColor(newArr[0]);
+  }
+  console.log("outsside:", computerChoice);
+  console.log(`color: ${listOfColor}`);
 
   return (
     <div>

@@ -5,11 +5,21 @@ enum ColorOptions {
   "yellow" = 3,
 }
 
-async function setColorPattern(btnId: string): Promise<string> {
-  console.log(btnId);
-  let btnIdAsNum = parseInt(btnId);
-  let selectedColor: string = ColorOptions[btnIdAsNum];
+function setColorPattern(btnId: string[]): string[] {
+  let arrTest: string[] = [];
+  arrTest = btnId.map((compChoice) => {
+    let btnIdAsNum = parseInt(compChoice);
+    let selectedColor: string = ColorOptions[btnIdAsNum];
+    console.log("selectedColor", selectedColor);
+    return selectedColor;
+    //arrTest.push(selectedColor)
+  });
+  return arrTest;
 
-  return "";
+  // console.log(btnId);
+  // let btnIdAsNum = parseInt(btnId);
+  // let selectedColor: string = ColorOptions[btnIdAsNum];
+
+  // return selectedColor;
 }
 export default setColorPattern;

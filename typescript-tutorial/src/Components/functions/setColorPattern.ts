@@ -1,25 +1,36 @@
-enum ColorOptions {
-  "blue" = 0,
-  "red" = 1,
-  "green" = 2,
-  "yellow" = 3,
-}
+// enum ColorOptions {
+//   "blue" = 0,
+//   "red" = 1,
+//   "green" = 2,
+//   "yellow" = 3,
+// }
 
 function setColorPattern(btnId: string[]): string[] {
+  console.log(`btnID: ${btnId}`);
   let arrTest: string[] = [];
   arrTest = btnId.map((compChoice) => {
-    let btnIdAsNum = parseInt(compChoice);
-    let selectedColor: string = ColorOptions[btnIdAsNum];
-    console.log("selectedColor", selectedColor);
+    let btnIdAsNum: number = parseInt(compChoice);
+    let selectedColor = colorChoice(btnIdAsNum);
+    console.log(`selesctedColor:${selectedColor}`);
     return selectedColor;
     //arrTest.push(selectedColor)
   });
+  console.log(`artests ${arrTest}`);
   return arrTest;
+}
 
-  // console.log(btnId);
-  // let btnIdAsNum = parseInt(btnId);
-  // let selectedColor: string = ColorOptions[btnIdAsNum];
-
-  // return selectedColor;
+function colorChoice(id: number): string {
+  switch (id) {
+    case 0:
+      return "blue";
+    case 1:
+      return "red";
+    case 2:
+      return "green";
+    case 3:
+      return "yellow";
+    default:
+      return "black";
+  }
 }
 export default setColorPattern;

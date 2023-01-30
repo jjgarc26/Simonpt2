@@ -7,6 +7,9 @@ function App() {
     <div>
       <MainGame />
     </div>
+    // <React.StrictMode>
+    //   <MainGame />
+    // </React.StrictMode>
   );
 }
 

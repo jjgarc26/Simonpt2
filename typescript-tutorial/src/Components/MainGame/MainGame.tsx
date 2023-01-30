@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import backgroundColors from "../utils/types";
 import style from "../Styles/MainGame.module.css";
-import setColorPattern from "../functions/setColorPattern";
+import colorChoice from "../functions/setColorPattern";
 import GenerateNewNumber from "../functions/ComputersTurn";
 
 // this will let us know which button will light up
@@ -13,36 +13,48 @@ import GenerateNewNumber from "../functions/ComputersTurn";
 let defaultList: string[] = [];
 
 function MainGame() {
-  let [computerChoice, setComputerChoice] = useState(defaultList);
+  // game settings
   let [turnNum, setTurnNum] = useState(0);
-  let [listOfColor, setListOfColor] = useState(defaultList);
   let [btnColors, setBtnColors] = useState(backgroundColors);
 
+  // computer settings
+  let [computerChoice, setComputerChoice] = useState(defaultList);
+  let [listOfColor, setListOfColor] = useState(defaultList);
+
+  // user settings
+  let [userChoice, setUserChoice] = useState(defaultList);
+
   const memorizedFunc = useCallback(() => {
-    listOfColor.forEach((color) => {
+    listOfColor.map((color) => {
       onClickColorUpdate(color);
     });
   }, [listOfColor]);
 
   useEffect(() => {
     memorizedFunc();
-  }, [turnNum]);
+  }, [computerChoice, listOfColor, turnNum]);
 
-  function computersTurn(): void {
-    // computers turn
-    let updatedColorList: string[] = [];
-
+  function computerPicksNewColor(): void {
     let colorPicked: string = GenerateNewNumber(computerChoice);
+    console.log(`coloPicked ${colorPicked}`);
 
-    setComputerChoice((prevArray) => [...prevArray, colorPicked]);
+    setComputerChoice((prevArray) => {
+      return [...prevArray, colorPicked];
+    });
+    updateColorPatterns(colorPicked);
+  }
 
-    updatedColorList = setColorPattern(computerChoice);
-
-    setListOfColor(updatedColorList);
-
-    console.log("listofColor = ", listOfColor);
+  function updateColorPatterns(colorPicked: string): void {
+    let idToString: number = parseInt(colorPicked);
+    let color: string = colorChoice(idToString);
+    setListOfColor((prevArray) => {
+      return [...prevArray, color];
+    });
     setTurnNum((turnNum += 1));
   }
+
+  console.log(`compChocot: ${computerChoice}`);
+  console.log("listofColorOt = ", listOfColor);
 
   function onClickColorUpdate(color: string): void {
     switch (color) {
@@ -71,10 +83,6 @@ function MainGame() {
         }, 1000);
     }
   }
-
-  console.log("outside:", computerChoice);
-  console.log(`outside log colorlist: ${listOfColor}`);
-  console.log(`outside log colors: ${btnColors["blue"]}`);
 
   return (
     <div>
@@ -119,7 +127,7 @@ function MainGame() {
         Yellow
       </div>
       <div>
-        <button onClick={computersTurn}>Click to start game</button>
+        <button onClick={computerPicksNewColor}>Click to start game</button>
       </div>
     </div>
   );
